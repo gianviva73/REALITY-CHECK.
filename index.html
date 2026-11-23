@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="it" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>REALITY CHECK — Digital Creator Lab</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        void: '#09090b',
+                        surface: '#111114',
+                        panel: '#18181b',
+                        alarm: '#ef4444',
+                        ember: '#f97316',
+                        neonCyan: '#06b6d4',
+                        neonEmerald: '#10b981',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Stili base e sfondi cyber-console */
+        body {
+            background-color: #09090b;
+            color: #f4f4f5;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(239, 68, 68, 0.08) 0%, transparent 50%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 24px 24px, 24px 24px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Personalizzazione avanzata degli Slider (Range Input) per mobile e desktop */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #27272a;
+            border-radius: 999px;
+            outline: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        /* Thumb per Chrome/Safari/Edge */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fafafa;
+            border: 3px solid #ef4444;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+            cursor: grab;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:active {
+            cursor: grabbing;
+            transform: scale(1.18);
+            box-shadow: 0 0 22px rgba(239, 68, 68, 0.9);
+        }
+
+        /* Thumb specifico per slider neutro/ciano (Età e Sonno) */
+        input[type="range"].slider-neutral::-webkit-slider-thumb {
+            border-color: #06b6d4;
+            box-shadow: 0 0 12px rgba(6, 182, 212, 0.5);
+        }
+
+        input[type="range"].slider-neutral::-webkit-slider-thumb:active {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.85);
+        }
+
+        /* Thumb per Firefox */
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fafafa;
+            border: 3px solid #ef4444;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+            cursor: grab;
+            transition: transform 0.15s ease;
+        }
+
+        input[type="range"].slider-neutral::-moz-range-thumb {
+            border-color: #06b6d4;
+            box-shadow: 0 0 12px rgba(6, 182, 212, 0.5);
+        }
+
+        /* Animazione glow pulsante per la card principale */
+        @keyframes pulseAlarm {
+            0%, 100% { box-shadow: 0 0 25px -5px rgba(239, 68, 68, 0.25); }
+            50% { box-shadow: 0 0 35px -2px rgba(239, 68, 68, 0.45); }
+        }
+
+        .alarm-card-glow {
+            animation: pulseAlarm 3s infinite ease-in-out;
+        }
+
+        /* Effetto vetro e bordo luminoso sottile */
+        .console-panel {
+            background: rgba(17, 17, 20, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-alarm selection:text-white">
+
+    <!-- Container principale centrato (ottimale per 9:16 mobile e screen recording) -->
+    <main class="w-full max-w-md mx-auto px-4 pt-6 pb-8 flex-grow flex flex-col gap-5">
+
+        <!-- INTESTAZIONE CONSOLE -->
+        <header class="text-center space-y-2">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/90 border border-zinc-800 shadow-inner">
+                <span class="w-2 h-2 rounded-full bg-neonCyan animate-ping"></span>
+                <span class="font-mono text-[11px] font-bold tracking-widest text-zinc-300 uppercase">
+                    DIGITAL CREATOR LAB // CONSOLE
+                </span>
+            </div>
+            
+            <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-white uppercase">
+                REALITY <span class="text-transparent bg-clip-text bg-gradient-to-r from-alarm to-ember">CHECK</span>
+            </h1>
+            
+            <p class="text-sm text-zinc-400 font-medium max-w-xs mx-auto leading-snug">
+                Scopri quanti anni della tua vita stai regalando allo schermo.
+            </p>
+        </header>
+
+        <!-- PANNELLO CONTROLLI INTERATTIVI (3 SLIDER) -->
+        <section class="console-panel rounded-2xl p-5 shadow-2xl space-y-5">
+            
+            <!-- Slider 1: Età attuale -->
+            <div class="space-y-2">
+                <div class="flex justify-between items-center">
+                    <label for="ageSlider" class="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+                        1. La tua età attuale
+                    </label>
+                    <span id="ageValue" class="font-mono text-base font-extrabold text-neonCyan bg-cyan-950/50 border border-cyan-500/30 px-2.5 py-0.5 rounded-lg">
+                        28 anni
+                    </span>
+                </div>
+                <input type="range" id="ageSlider" class="slider-neutral" min="16" max="75" step="1" value="28">
+                <div class="flex justify-between text-[10px] font-mono text-zinc-600">
+                    <span>16</span>
+                    <span>45</span>
+                    <span>75</span>
+                </div>
+            </div>
+
+            <!-- Slider 2: Ore al giorno sui social / scroll -->
+            <div class="space-y-2 pt-1 border-t border-zinc-800/80">
+                <div class="flex justify-between items-center">
+                    <label for="socialSlider" class="text-xs font-semibold uppercase tracking-wider text-zinc-300">
+                        2. Ore al giorno sui social / scroll
+                    </label>
+                    <span id="socialValue" class="font-mono text-base font-extrabold text-alarm bg-red-950/60 border border-red-500/40 px-2.5 py-0.5 rounded-lg">
+                        3.5 ore
+                    </span>
+                </div>
+                <input type="range" id="socialSlider" min="0.5" max="10" step="0.5" value="3.5">
+                <div class="flex justify-between text-[10px] font-mono text-zinc-600">
+                    <span>0.5h</span>
+                    <span>5h</span>
+                    <span>10h</span>
+                </div>
+            </div>
+
+            <!-- Slider 3: Ore di sonno -->
+            <div class="space-y-2 pt-1 border-t border-zinc-800/80">
+                <div class="flex justify-between items-center">
+                    <label for="sleepSlider" class="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+                        3. Ore di sonno al giorno
+                    </label>
+                    <span id="sleepValue" class="font-mono text-base font-extrabold text-zinc-200 bg-zinc-800/80 border border-zinc-700 px-2.5 py-0.5 rounded-lg">
+                        7.5 ore
+                    </span>
+                </div>
+                <input type="range" id="sleepSlider" class="slider-neutral" min="4" max="11" step="0.5" value="7.5">
+                <div class="flex justify-between text-[10px] font-mono text-zinc-600">
+                    <span>4h</span>
+                    <span>7.5h</span>
+                    <span>11h</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- DASHBOARD RISULTATI IN TEMPO REALE -->
+        <section id="resultCard" class="console-panel rounded-2xl p-5 border-red-500/30 alarm-card-glow relative overflow-hidden space-y-4">
+                    <!-- Valore principale: Anni interi da sveglio persi -->
+                    <div class="space-y-1">
+                        <span class="block font-mono text-[10px] font-bold uppercase tracking-widest text-red-400">
+                            TEMPO FUTURO BRUCIATO SULLO SCHERMO
+                        </span>
+                        <div class="flex items-baseline gap-2">
+                            <span id="yearsLostDisplay" class="font-mono text-4xl sm:text-5xl font-black text-white tracking-tight">
+                                11.5
+                            </span>
+                            <span class="text-sm font-bold text-zinc-400 uppercase tracking-wide">
+                                anni da sveglio persi
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Paragrafo descrittivo + riquadri rapidi: Anni Interi Persi, Giorni all'anno e % Vita Sveglia -->
+                    <p class="text-xs text-zinc-400">
+                        Pari a <strong id="hoursLostDisplay" class="font-mono text-zinc-200">69.032 ore</strong> passate a guardare la vita degli altri.
+                    </p>
+                    <div class="grid grid-cols-3 gap-2 pt-2 text-left">
+                        <div class="bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-2.5">
+                            <span class="block font-mono text-[9px] uppercase tracking-wider text-zinc-500">Anni Persi</span>
+                            <span id="yearsCardDisplay" class="font-mono text-sm font-extrabold text-red-400">11.5a</span>
+                        </div>
+                        <div class="bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-2.5">
+                            <span class="block font-mono text-[9px] uppercase tracking-wider text-zinc-500">Giorni / Anno</span>
+                            <span id="daysPerYearDisplay" class="font-mono text-sm font-extrabold text-ember">53.2g</span>
+                        </div>
+                        <div class="bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-2.5">
+                            <span class="block font-mono text-[9px] uppercase tracking-wider text-zinc-500">% Vita Sveglia</span>
+                            <span id="wakingPercentCardDisplay" class="font-mono text-sm font-extrabold text-neonCyan">21.2%</span>
+                        </div>
+                    </div>
+            </div>
+
+            <!-- Barra di Progresso Drammatica -->
+            <div class="bg-zinc-950/90 rounded-xl p-3.5 border border-zinc-800/90 space-y-2">
+                <div class="flex justify-between items-end">
+                    <span class="text-xs font-medium text-zinc-400">
+                        Quota della tua vita da sveglio:
+                    </span>
+                    <span id="percentLostDisplay" class="font-mono text-lg font-black text-ember">
+                        21.2%
+                    </span>
+                </div>
+                
+                <!-- Traccia barra -->
+                <div class="w-full h-3.5 bg-zinc-900 rounded-full overflow-hidden p-0.5 border border-zinc-800">
+                    <div id="progressBar" class="h-full rounded-full bg-gradient-to-r from-ember to-alarm transition-all duration-300 ease-out" style="width: 21.2%;"></div>
+                </div>
+                
+                <div class="flex justify-between text-[10px] font-mono text-zinc-500">
+                    <span>0% (Controllo totale)</span>
+                    <span id="remainingYearsNote">Stima su 82 anni di vita</span>
+                </div>
+            </div>
+
+            <!-- Equivalente Pratico ("Con queste stesse ore potresti...") -->
+            <div class="bg-zinc-900/70 rounded-xl p-3.5 border border-zinc-800/80 space-y-2.5">
+                <div class="flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-neonCyan">
+                        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        <span>Con queste stesse ore potresti:</span>
+                    </div>
+                    <span id="dynamicScenarioTag" class="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-cyan-950/60 text-cyan-300 border border-cyan-500/25">
+                        MODALITÀ FOCUS
+                    </span>
+                </div>
+                <p id="equivalentsLeadPhrase" class="text-[11px] text-zinc-400 leading-snug transition-all duration-200">
+                    Ogni slider che muovi ridisegna il valore reale di ciò che stai lasciando sul tavolo.
+                </p>
+                <ul id="equivalentsList" class="grid grid-cols-1 gap-2 text-xs text-zinc-300 font-medium">
+                    <!-- Popolato dinamicamente via JS in base al movimento delle asticelle -->
+                </ul>
+            </div>
+
+            <!-- SCHIAFFO MORALE (Frase Motivazionale Dinamica) -->
+            <div id="slapBox" class="rounded-xl p-3.5 bg-red-950/30 border border-red-500/30 transition-colors duration-300">
+                <div class="flex items-start gap-2.5">
+                    <span id="slapIcon" class="text-lg leading-none mt-0.5">⚠️</span>
+                    <div class="space-y-1">
+                        <span id="slapBadge" class="font-mono text-[10px] font-extrabold uppercase tracking-wider text-red-400 block">
+                            ALLARME ROSSO // SVEGLIA
+                        </span>
+                        <p id="slapQuote" class="text-xs sm:text-sm font-bold text-white leading-snug">
+                            "Stai pagando i contenuti degli altri con l'unica valuta che non puoi riavere indietro: il tuo tempo."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PULSANTI D'AZIONE (CALL TO ACTION) -->
+        <section class="space-y-3 pt-1">
+            <!-- CTA Primaria: Video Relax & Focus su YouTube -->
+            <a href="https://www.youtube.com/watch?v=6yYpOv0QE5U" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="group relative w-full flex flex-col items-center justify-center py-3.5 px-5 rounded-xl text-zinc-950 bg-gradient-to-r from-neonCyan to-neonEmerald hover:brightness-110 active:scale-[0.98] transition-all duration-200 shadow-[0_0_25px_rgba(6,182,212,0.45)]">
+                <div class="flex items-center justify-center gap-2 font-extrabold text-sm">
+                    <span class="text-base">🎧</span>
+                    <span class="tracking-tight">ENTRA IN MODALITÀ FOCUS ➔</span>
+                </div>
+                <span class="text-[11px] font-semibold text-zinc-900/85 mt-0.5">
+                    Melodia dolce al pianoforte nel bosco autunnale 🍂
+                </span>
+            </a>
+
+            <!-- CTA Secondaria: Copia Risultato -->
+            <button id="copyBtn" 
+                    type="button"
+                    class="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl font-bold text-xs sm:text-sm text-zinc-200 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700/80 active:scale-[0.98] transition-all duration-200">
+                <span id="copyBtnIcon">📋</span>
+                <span id="copyBtnText">COPIA IL MIO RISULTATO</span>
+            </button>
+        </section>
+
+    </main>
+
+    <!-- FOOTER / MINI BARRA SOCIAL -->
+    <footer class="w-full max-w-md mx-auto px-4 pb-6 pt-2 text-center space-y-3">
+        <div class="flex items-center justify-center gap-4">
+            <!-- Link YouTube -->
+            <a href="https://youtube.com/@digitalcreatorlabIT" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900/90 border border-zinc-800 text-xs font-semibold text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors">
+                <svg class="w-3.5 h-3.5 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                <span>YouTube</span>
+            </a>
+
+            <!-- Link TikTok -->
+            <a href="https://www.tiktok.com/@digital_creatorlab" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900/90 border border-zinc-800 text-xs font-semibold text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors">
+                <svg class="w-3.5 h-3.5 text-neonCyan" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                </svg>
+                <span>TikTok</span>
+            </a>
+        </div>
+
+        <p class="font-mono text-[11px] text-zinc-500 tracking-wide">
+            Digital Creator Lab • <span class="text-zinc-400 font-semibold">Meno teoria, più azione</span>
+        </p>
+    </footer>
+
+    <!-- Toast di notifica personalizzato (al posto di alert) -->
+    <div id="toastNotification" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300 translate-y-4">
+        <div class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-zinc-900 border border-neonEmerald/50 text-white text-xs font-bold shadow-[0_0_20px_rgba(16,185,129,0.35)]">
+            <span class="text-neonEmerald">✓</span>
+            <span>Testo copiato! Incollalo su TikTok o WhatsApp</span>
+        </div>
+    </div>
+
+    <!-- LOGICA APPLICATIVA JAVASCRIPT -->
+    <script>
+        (function() {
+            // Riferimenti agli elementi DOM
+            const ageSlider = document.getElementById('ageSlider');
+            const socialSlider = document.getElementById('socialSlider');
+            const sleepSlider = document.getElementById('sleepSlider');
+
+            const ageValue = document.getElementById('ageValue');
+            const socialValue = document.getElementById('socialValue');
+            const sleepValue = document.getElementById('sleepValue');
+
+            const yearsLostDisplay = document.getElementById('yearsLostDisplay');
+            const hoursLostDisplay = document.getElementById('hoursLostDisplay');
+            const percentLostDisplay = document.getElementById('percentLostDisplay');
+            const yearsCardDisplay = document.getElementById('yearsCardDisplay');
+            const daysPerYearDisplay = document.getElementById('daysPerYearDisplay');
+            const wakingPercentCardDisplay = document.getElementById('wakingPercentCardDisplay');
+            const progressBar = document.getElementById('progressBar');
+            const remainingYearsNote = document.getElementById('remainingYearsNote');
+            const dynamicScenarioTag = document.getElementById('dynamicScenarioTag');
+            const equivalentsLeadPhrase = document.getElementById('equivalentsLeadPhrase');
+            const equivalentsList = document.getElementById('equivalentsList');
+
+            const slapBox = document.getElementById('slapBox');
+            const slapIcon = document.getElementById('slapIcon');
+            const slapBadge = document.getElementById('slapBadge');
+            const slapQuote = document.getElementById('slapQuote');
+
+            const copyBtn = document.getElementById('copyBtn');
+            const copyBtnIcon = document.getElementById('copyBtnIcon');
+            const copyBtnText = document.getElementById('copyBtnText');
+            const toastNotification = document.getElementById('toastNotification');
+
+            // Costante aspettativa di vita media
+            const LIFE_EXPECTANCY = 82;
+
+            // Variabili globali per il testo da copiare
+            let currentYearsLostFormatted = "11.5";
+            let currentPercentFormatted = "21.2";
+            let currentDaysPerYearFormatted = "53.2";
+
+            // Funzione per colorare dinamicamente la traccia dello slider
+            function updateSliderFill(slider, activeColor) {
+                const min = parseFloat(slider.min);
+                const max = parseFloat(slider.max);
+                const val = parseFloat(slider.value);
+                const percentage = ((val - min) / (max - min)) * 100;
+                slider.style.background = `linear-gradient(to right, ${activeColor} 0%, ${activeColor} ${percentage}%, #27272a ${percentage}%, #27272a 100%)`;
+            }
+
+            // Costruisce in tempo reale le voci e le frasi della sezione "Con queste stesse ore potresti:"
+            // in base alle asticelle (età, ore social, ore sonno), ore perse all'anno e % di vita sveglia.
+            function buildDynamicEquivalents({ age, socialHours, sleepHours, remainingYears, awakeHoursPerDay, totalHoursLost, percentLost }) {
+                const annualLostHours = socialHours * 365.25;
+                const annualLostDays = annualLostHours / 24;
+                const annualWakingDays = annualLostHours / awakeHoursPerDay;
+                const trainingSessions = Math.max(1, Math.round(annualLostHours / 1.25)); // sessioni da 75 min all'anno
+                const booksPerYear = Math.max(1, Math.round(annualLostHours / 12)); // ~12h a libro
+                const totalBooks = Math.max(1, Math.round(totalHoursLost / 15));
+                const deepWorkHours = Math.round(totalHoursLost);
+                const projectUnits = Math.max(1, Math.round(totalHoursLost / 250));
+
+                // Selezione dinamica di tono, badge, frase introduttiva e 3 voci in base a soglie reali
+                if (socialHours <= 1.5 && percentLost < 12) {
+                    return {
+                        badge: "RITMO SOSTENIBILE",
+                        badgeClass: "font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-950/70 text-emerald-300 border border-emerald-500/30",
+                        leadPhrase: `Con ${socialHours.toFixed(1).replace('.0', '')}h al giorno (${annualLostHours.toFixed(0)}h/anno) hai margine reale per costruire con costanza:`,
+                        items: [
+                            {
+                                text: `Leggere circa <strong class="text-white">${booksPerYear} ${booksPerYear === 1 ? 'libro' : 'libri'} all'anno</strong> (o <strong class="text-white">${totalBooks}</strong> da qui agli 82 anni) senza stravolgere le tue giornate.`,
+                                note: "Crescita leggera"
+                            },
+                            {
+                                text: `Accumulare <strong class="text-white">${trainingSessions} sessioni di allenamento o studio</strong> all'anno, mantenendo il tuo sonno da ${sleepHours.toFixed(1).replace('.0', '')}h.`,
+                                note: "Costanza 1%"
+                            },
+                            {
+                                text: `Recuperare <strong class="text-white">${annualWakingDays.toFixed(1)} giornate piene da sveglio</strong> ogni 12 mesi per un progetto personale.`,
+                                note: `${remainingYears} anni davanti`
+                            }
+                        ]
+                    };
+                } else if (socialHours <= 3.5 && percentLost < 25) {
+                    return {
+                        badge: age < 35 ? "FINESTRA D'ORO" : "LEVA TEMPORALE",
+                        badgeClass: "font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-orange-950/70 text-orange-300 border border-orange-500/30",
+                        leadPhrase: `A ${age} anni, ${annualLostHours.toFixed(0)} ore l'anno sullo schermo valgono intere abitudini che potrebbero cambiare la tua traiettoria:`,
+                        items: [
+                            {
+                                text: `Completare <strong class="text-white">${projectUnits} ${projectUnits === 1 ? 'progetto o competenza' : 'progetti o competenze'}</strong> (circa <strong class="text-white">${deepWorkHours.toLocaleString('it-IT')}h</strong> totali da qui agli 82 anni).`,
+                                note: "Valore composto"
+                            },
+                            {
+                                text: `Trasformare <strong class="text-white">${annualLostDays.toFixed(1)} giorni interi all'anno</strong> in deep work, creazione o formazione mirata.`,
+                                note: `${percentLost.toFixed(1)}% vita sveglia`
+                            },
+                            {
+                                text: `Leggere <strong class="text-white">${totalBooks} libri</strong> o realizzare <strong class="text-white">${trainingSessions} sessioni</strong> di focus reale ogni singolo anno.`,
+                                note: "Zero scuse"
+                            }
+                        ]
+                    };
+                } else {
+                    return {
+                        badge: "ALLARME TEMPO",
+                        badgeClass: "font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-red-950/80 text-red-300 border border-red-500/40",
+                        leadPhrase: `Stai cedendo il <strong class="text-red-300">${percentLost.toFixed(1)}%</strong> del tuo tempo da sveglio (${annualLostHours.toFixed(0)}h/anno): ecco cosa potresti creare invece:`,
+                        items: [
+                            {
+                                text: `Costruire <strong class="text-white">${projectUnits} ${projectUnits === 1 ? 'sistema o attività indipendente' : 'sistemi o attività indipendenti'}</strong> con <strong class="text-white">${deepWorkHours.toLocaleString('it-IT')} ore</strong> totali recuperate.`,
+                                note: "Libertà concreta"
+                            },
+                            {
+                                text: `Riscattare <strong class="text-white">${annualWakingDays.toFixed(1)} giorni svegli all'anno</strong> (con ${awakeHoursPerDay.toFixed(1).replace('.0', '')}h di veglia) per uscire dal loop passivo.`,
+                                note: "Svolta reale"
+                            },
+                            {
+                                text: `Sostenere <strong class="text-white">${trainingSessions} blocchi di azione</strong> all'anno o leggere fino a <strong class="text-white">${booksPerYear} libri</strong> l'anno.`,
+                                note: "Azione > Scroll"
+                            }
+                        ]
+                    };
+                }
+            }
+
+            // Funzione principale di calcolo e aggiornamento UI
+            function calculateReality() {
+                try {
+                    const age = parseInt(ageSlider.value, 10);
+                    const socialHours = parseFloat(socialSlider.value);
+                    const sleepHours = parseFloat(sleepSlider.value);
+
+                    // Aggiorna etichette dei cursori
+                    ageValue.textContent = `${age} anni`;
+                    socialValue.textContent = `${socialHours.toFixed(1).replace('.0', '')} ${socialHours === 1 ? 'ora' : 'ore'}`;
+                    sleepValue.textContent = `${sleepHours.toFixed(1).replace('.0', '')} ore`;
+
+                    // Aggiorna riempimento visivo degli slider
+                    updateSliderFill(ageSlider, '#06b6d4');
+                    updateSliderFill(socialSlider, '#ef4444');
+                    updateSliderFill(sleepSlider, '#52525b');
+
+                    // 1. Anni rimanenti da vivere (minimo 1)
+                    const remainingYears = Math.max(1, LIFE_EXPECTANCY - age);
+                    remainingYearsNote.textContent = `Orizzonte: ${remainingYears} ${remainingYears === 1 ? 'anno' : 'anni'} (su 82)`;
+
+                    // 2. Ore da sveglio al giorno (minimo 1 per evitare divisione per zero)
+                    const awakeHoursPerDay = Math.max(1, 24 - sleepHours);
+
+                    // 3. Ore totali perse sullo schermo
+                    const totalHoursLost = remainingYears * 365.25 * socialHours;
+
+                    // 4. Anni interi da sveglio passati a scrollare
+                    const wakingYearsLost = totalHoursLost / (awakeHoursPerDay * 365.25);
+
+                    // 5. Giorni all'anno persi (24h equivalenti)
+                    const daysPerYear = (socialHours * 365.25) / 24;
+
+                    // 6. Percentuale del tempo da sveglio futuro bruciata (cap al 100%)
+                    const rawPercent = (socialHours / awakeHoursPerDay) * 100;
+                    const percentLost = Math.min(100, rawPercent);
+
+                    // Formattazione numeri
+                    currentYearsLostFormatted = wakingYearsLost.toFixed(1);
+                    currentPercentFormatted = percentLost.toFixed(1);
+                    currentDaysPerYearFormatted = daysPerYear.toFixed(1);
+                    const formattedHours = Math.round(totalHoursLost).toLocaleString('it-IT');
+
+                    // Aggiorna DOM risultati principali e riquadri dedicati
+                    if (yearsLostDisplay) yearsLostDisplay.textContent = currentYearsLostFormatted;
+                    if (hoursLostDisplay) hoursLostDisplay.textContent = `${formattedHours} ore`;
+                    if (percentLostDisplay) percentLostDisplay.textContent = `${currentPercentFormatted}%`;
+                    if (yearsCardDisplay) yearsCardDisplay.textContent = `${currentYearsLostFormatted}a`;
+                    if (daysPerYearDisplay) daysPerYearDisplay.textContent = `${currentDaysPerYearFormatted}g`;
+                    if (wakingPercentCardDisplay) wakingPercentCardDisplay.textContent = `${currentPercentFormatted}%`;
+                    if (progressBar) progressBar.style.width = `${percentLost}%`;
+
+                    // Aggiornamento dinamico della sezione "Con queste stesse ore potresti:"
+                    const dynamicData = buildDynamicEquivalents({
+                        age,
+                        socialHours,
+                        sleepHours,
+                        remainingYears,
+                        awakeHoursPerDay,
+                        totalHoursLost,
+                        percentLost
+                    });
+
+                    dynamicScenarioTag.className = dynamicData.badgeClass;
+                    dynamicScenarioTag.textContent = dynamicData.badge;
+                    equivalentsLeadPhrase.innerHTML = dynamicData.leadPhrase;
+
+                    equivalentsList.innerHTML = dynamicData.items.map(item => `
+                        <li class="flex items-start justify-between gap-2 bg-zinc-950/60 border border-zinc-800/70 rounded-lg px-2.5 py-2 transition-all duration-200">
+                            <div class="flex items-start gap-2">
+                                <span class="text-neonEmerald font-mono font-bold mt-0.5">➔</span>
+                                <span>${item.text}</span>
+                            </div>
+                            <span class="shrink-0 font-mono text-[10px] text-zinc-400 bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">
+                                ${item.note}
+                            </span>
+                        </li>
+                    `).join('');
+
+                    // Logica "Schiaffo Morale" dinamico in base alla gravità (ore social al giorno)
+                    updateMotivationalSlap(socialHours, percentLost);
+
+                } catch (error) {
+                    console.error("Errore nel calcolo Reality Check:", error);
+                }
+            }
+
+            // Aggiorna la frase motivazionale e lo stile dell'alert in base alla gravità
+            function updateMotivationalSlap(socialHours, percentLost) {
+                if (socialHours <= 1.5 && percentLost < 12) {
+                    // Livello Basso / Sotto controllo
+                    slapBox.className = "rounded-xl p-3.5 bg-emerald-950/30 border border-emerald-500/30 transition-colors duration-300";
+                    slapIcon.textContent = "⚡";
+                    slapBadge.className = "font-mono text-[10px] font-extrabold uppercase tracking-wider text-neonEmerald block";
+                    slapBadge.textContent = "LIVELLO: CONTROLLO // OTTIMO";
+                    slapQuote.textContent = "Hai già più disciplina del 90% delle persone. Usa quel vantaggio per costruire qualcosa di tuo oggi.";
+                } else if (socialHours <= 3.5 && percentLost < 25) {
+                    // Livello Medio / Attenzione
+                    slapBox.className = "rounded-xl p-3.5 bg-orange-950/30 border border-orange-500/35 transition-colors duration-300";
+                    slapIcon.textContent = "🔥";
+                    slapBadge.className = "font-mono text-[10px] font-extrabold uppercase tracking-wider text-ember block";
+                    slapBadge.textContent = "LIVELLO: ATTENZIONE // ZONA GRIGIA";
+                    slapQuote.textContent = "Non ti manca il tempo, ti manca il focus. Smetti di essere solo uno spettatore e diventa il creator della tua vita.";
+                } else {
+                    // Livello Critico / Allarme Rosso
+                    slapBox.className = "rounded-xl p-3.5 bg-red-950/40 border border-red-500/40 transition-colors duration-300";
+                    slapIcon.textContent = "🚨";
+                    slapBadge.className = "font-mono text-[10px] font-extrabold uppercase tracking-wider text-red-400 block";
+                    slapBadge.textContent = "LIVELLO: CRITICO // SVEGLIA ADESSO";
+                    slapQuote.textContent = "Stai regalando anni interi della tua vita a un algoritmo che non si ricorderà nemmeno il tuo nome. Chiudi lo scroll e agisci.";
+                }
+            }
+
+            // Gestione copia negli appunti (compatibile anche con iFrame/mobile)
+            function copyResultToClipboard() {
+                const shareText = `Ho fatto il Reality Check (@digitalcreatorlabIT): ${currentYearsLostFormatted} anni da sveglio (${currentPercentFormatted}% del tempo sveglio, ${currentDaysPerYearFormatted} giorni/anno) rischiano di andare in fumo sullo schermo 😱 Fai il test anche tu!`;
+
+                // Creazione textarea temporanea per execCommand('copy') affidabile ovunque
+                const textArea = document.createElement("textarea");
+                textArea.value = shareText;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-9999px";
+                textArea.style.top = "0";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+
+                try {
+                    const successful = document.execCommand('copy');
+                    if (successful) {
+                        showCopyFeedback();
+                    }
+                } catch (err) {
+                    console.error("Impossibile copiare il testo:", err);
+                }
+
+                document.body.removeChild(textArea);
+            }
+
+            // Mostra feedback visivo sul pulsante e toast
+            function showCopyFeedback() {
+                copyBtnIcon.textContent = "✅";
+                copyBtnText.textContent = "RISULTATO COPIATO!";
+                copyBtn.classList.add("border-neonEmerald", "text-neonEmerald");
+
+                toastNotification.classList.remove("opacity-0", "translate-y-4");
+                toastNotification.classList.add("opacity-100", "translate-y-0");
+
+                setTimeout(() => {
+                    copyBtnIcon.textContent = "📋";
+                    copyBtnText.textContent = "COPIA IL MIO RISULTATO";
+                    copyBtn.classList.remove("border-neonEmerald", "text-neonEmerald");
+
+                    toastNotification.classList.remove("opacity-100", "translate-y-0");
+                    toastNotification.classList.add("opacity-0", "translate-y-4");
+                }, 2600);
+            }
+
+            // Event Listeners sui cursori e sul pulsante copia
+            ageSlider.addEventListener('input', calculateReality);
+            socialSlider.addEventListener('input', calculateReality);
+            sleepSlider.addEventListener('input', calculateReality);
+            copyBtn.addEventListener('click', copyResultToClipboard);
+
+            // Inizializzazione al caricamento
+            window.addEventListener('DOMContentLoaded', calculateReality);
+            calculateReality();
+        })();
+    </script>
+</body>
+</html>
